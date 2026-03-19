@@ -1,65 +1,118 @@
-import Image from "next/image";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import ScrollProgress from "@/components/layout/ScrollProgress";
+import HeroSection from "@/components/sections/HeroSection";
+import AboutSection from "@/components/sections/AboutSection";
+import ExperienceSection from "@/components/sections/ExperienceSection";
+import ProjectsSection from "@/components/sections/ProjectsSection";
+import PublicationsSection from "@/components/sections/PublicationsSection";
+import ContactSection from "@/components/sections/ContactSection";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      {/* Fixed scroll progress bar at the very top of viewport */}
+      <ScrollProgress />
+
+      {/* Sticky nav — slides in after user scrolls past hero */}
+      <Navbar />
+
+      {/*
+        ============================================================
+        GLOBAL GRADIENT ORBS
+        Fixed, large, blurred color pools that drift slowly.
+        They sit below all content (z-0) and make glass effects
+        pop by giving the blur something saturated to blend.
+        ============================================================
+      */}
+      <div aria-hidden="true" className="pointer-events-none select-none">
+        {/* Blue orb — top-left anchor */}
+        <div
+          style={{
+            position: "fixed",
+            top: "-10vh",
+            left: "-10vw",
+            width: "70vw",
+            height: "70vw",
+            maxWidth: "900px",
+            maxHeight: "900px",
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle at center, rgba(59,130,246,0.14) 0%, transparent 70%)",
+            filter: "blur(80px)",
+            animation: "orb-drift-1 28s ease-in-out infinite",
+            zIndex: 0,
+          }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+
+        {/* Purple orb — bottom-right anchor */}
+        <div
+          style={{
+            position: "fixed",
+            bottom: "-15vh",
+            right: "-10vw",
+            width: "65vw",
+            height: "65vw",
+            maxWidth: "800px",
+            maxHeight: "800px",
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle at center, rgba(139,92,246,0.12) 0%, transparent 70%)",
+            filter: "blur(80px)",
+            animation: "orb-drift-2 34s ease-in-out infinite",
+            zIndex: 0,
+          }}
+        />
+
+        {/* Emerald orb — mid-right */}
+        <div
+          style={{
+            position: "fixed",
+            top: "40vh",
+            right: "5vw",
+            width: "40vw",
+            height: "40vw",
+            maxWidth: "500px",
+            maxHeight: "500px",
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle at center, rgba(16,185,129,0.07) 0%, transparent 70%)",
+            filter: "blur(70px)",
+            animation: "orb-drift-3 22s ease-in-out infinite 4s",
+            zIndex: 0,
+          }}
+        />
+
+        {/* Pink accent orb — mid-left, subtle */}
+        <div
+          style={{
+            position: "fixed",
+            top: "60vh",
+            left: "5vw",
+            width: "35vw",
+            height: "35vw",
+            maxWidth: "400px",
+            maxHeight: "400px",
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle at center, rgba(236,72,153,0.06) 0%, transparent 70%)",
+            filter: "blur(70px)",
+            animation: "orb-drift-1 40s ease-in-out infinite 8s",
+            zIndex: 0,
+          }}
+        />
+      </div>
+
+      <main style={{ position: "relative", zIndex: 1 }}>
+        <HeroSection />
+        <AboutSection />
+        <ExperienceSection />
+        <ProjectsSection />
+        <PublicationsSection />
+        <ContactSection />
       </main>
-    </div>
+
+      <Footer />
+    </>
   );
 }
