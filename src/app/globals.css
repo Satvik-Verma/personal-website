@@ -124,6 +124,63 @@ body::after {
   0%, 100% { opacity: 0.12; }
   50%       { opacity: 0.22; }
 }
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* ============================================================
+   TECH ORBIT — two concentric arcs that rotate on GPU transform.
+   Only transform is animated; no paint, no layout recalc.
+   ============================================================ */
+@keyframes orbit-cw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes orbit-ccw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+/* Counter-rotate chips so their text stays upright */
+@keyframes chip-upright-cw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+@keyframes chip-upright-ccw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.orbit-ring-outer {
+  animation: orbit-cw 80s linear infinite;
+  will-change: transform;
+}
+.orbit-ring-inner {
+  animation: orbit-ccw 55s linear infinite;
+  will-change: transform;
+}
+.orbit-chip-outer {
+  animation: chip-upright-cw 80s linear infinite;
+  will-change: transform;
+}
+.orbit-chip-inner {
+  animation: chip-upright-ccw 55s linear infinite;
+  will-change: transform;
+}
+
+/* Pause on hover for the whole assembly */
+.orbit-assembly:hover .orbit-ring-outer,
+.orbit-assembly:hover .orbit-chip-outer {
+  animation-play-state: paused;
+}
+.orbit-assembly:hover .orbit-ring-inner,
+.orbit-assembly:hover .orbit-chip-inner {
+  animation-play-state: paused;
+}
 
 /* ============================================================
    LIQUID GLASS — Apple iOS 26 style

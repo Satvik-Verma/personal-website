@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { socialLinks, identity } from "@/data/profile";
 
 const SocialIcon = ({ platform }: { platform: string }) => {
@@ -37,6 +38,7 @@ const SocialIcon = ({ platform }: { platform: string }) => {
 
 export default function Footer() {
   const [easterEggOpen, setEasterEggOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <footer className="footer-glass relative">
@@ -137,40 +139,68 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} {identity.name}. Built with Next.js &amp; Three.js.
           </p>
 
-          {/* Easter egg — skeuomorphic pressable button */}
+          {/* Easter egg — glowing pixel-game button */}
           <div className="relative">
-            <button
-              onClick={() => setEasterEggOpen((o) => !o)}
-              className="text-xs transition-colors duration-200 underline underline-offset-4 decoration-dotted"
-              style={{ color: easterEggOpen ? "#a1a1aa" : "#52525b" }}
+            <motion.button
+              onClick={() => {
+                if (!easterEggOpen) {
+                  setEasterEggOpen(true);
+                } else {
+                  router.push("/game");
+                }
+              }}
+              className="relative text-xs overflow-hidden"
+              style={{
+                padding: "6px 14px",
+                borderRadius: 8,
+                border: "1px solid rgba(74,255,170,0.25)",
+                background: "rgba(74,255,170,0.04)",
+                color: easterEggOpen ? "#4affaa" : "#52525b",
+                fontFamily: "monospace",
+                letterSpacing: "0.04em",
+                cursor: "pointer",
+                transition: "color 0.2s, border-color 0.2s",
+              }}
+              whileHover={{
+                scale: 1.03,
+                boxShadow: "0 0 16px rgba(74,255,170,0.18), 0 0 32px rgba(74,255,170,0.08)",
+              }}
+              whileTap={{ scale: 0.97 }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.color = "#a1a1aa";
+                (e.currentTarget as HTMLElement).style.color = "#4affaa";
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(74,255,170,0.45)";
               }}
               onMouseLeave={(e) => {
                 if (!easterEggOpen) {
                   (e.currentTarget as HTMLElement).style.color = "#52525b";
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(74,255,170,0.25)";
                 }
               }}
             >
-              Wanna see something cool?
-            </button>
+              {easterEggOpen ? "Enter Satvik's World →" : "Wanna see something cool?"}
+            </motion.button>
 
             <AnimatePresence>
               {easterEggOpen && (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.85, y: 10 }}
+                  initial={{ opacity: 0, scale: 0.88, y: 8 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.85, y: 10 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  exit={{ opacity: 0, scale: 0.88, y: 8 }}
+                  transition={{ type: "spring", stiffness: 420, damping: 26 }}
                   className="easter-egg-glass absolute bottom-full right-0 mb-3 w-64 p-4 rounded-2xl"
+                  style={{ border: "1px solid rgba(74,255,170,0.2)" }}
                 >
                   <p className="text-sm leading-relaxed" style={{ color: "#a1a1aa" }}>
-                    You scrolled all the way here. That&apos;s dedication.{" "}
-                    <span style={{ color: "#fafafa" }}>Scroll back up</span>{" "}
-                    — the 3D hero is worth another look.
+                    A hidden{" "}
+                    <span style={{ color: "#4affaa", fontFamily: "monospace" }}>
+                      pixel-art RPG
+                    </span>{" "}
+                    lives here. Explore Satvik&apos;s world and discover his work — one building at a time.
                   </p>
-                  <div className="mt-2 text-xs" style={{ color: "#52525b" }}>
-                    Built with passion at 2am.
+                  <div className="mt-3 flex items-center gap-1.5">
+                    <span style={{ color: "#4affaa", fontFamily: "monospace", fontSize: 10 }}>
+                      ↑ click the button to play
+                    </span>
                   </div>
                 </motion.div>
               )}

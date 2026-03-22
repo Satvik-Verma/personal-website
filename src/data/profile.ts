@@ -365,9 +365,4 @@ export const education = [
     school: "San Francisco State University",
     year: "Aug 2023 \u2013 May 2025",
   },
-  {
-    degree: "B.S. Computer Science Engineering",
-    school: "Guru Gobind Singh Indraprastha University",
-    year: "Aug 2019 \u2013 July 2023",
-  },
 ];
