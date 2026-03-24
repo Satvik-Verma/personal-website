@@ -1,92 +1,26 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { identity, heroSkills } from "@/data/profile";
 
 // ─── Mouse-reactive aurora gradient ─────────────────────────────────────────
 
 function AuroraBackground() {
-  const mouseX = useMotionValue(0.5);
-  const mouseY = useMotionValue(0.5);
-  const smoothX = useSpring(mouseX, { stiffness: 30, damping: 20 });
-  const smoothY = useSpring(mouseY, { stiffness: 30, damping: 20 });
-
-  const gradX = useTransform(smoothX, [0, 1], ["20%", "80%"]);
-  const gradY = useTransform(smoothY, [0, 1], ["20%", "80%"]);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX / window.innerWidth);
-      mouseY.set(e.clientY / window.innerHeight);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
+  // Static gradient mesh — no blur filters, no JS animations, minimal GPU cost.
+  // On desktop we add a subtle mouse-reactive blob; on mobile it's pure CSS.
   return (
     <div className="absolute inset-0 overflow-hidden">
-      <div className="absolute inset-0 bg-[#0a0a0a]" />
-
-      {/* Primary aurora blob — blue, follows mouse */}
-      <motion.div
-        className="absolute w-[800px] h-[800px] rounded-full"
-        style={{
-          left: gradX,
-          top: gradY,
-          x: "-50%",
-          y: "-50%",
-          background: "radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%)",
-          filter: "blur(80px)",
-        }}
-      />
-
-      {/* Secondary aurora — purple */}
-      <motion.div
-        className="absolute w-[600px] h-[600px] rounded-full"
-        animate={{ x: [0, 100, -50, 0], y: [0, -80, 40, 0] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        style={{
-          right: "10%",
-          top: "20%",
-          background: "radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)",
-          filter: "blur(80px)",
-        }}
-      />
-
-      {/* Tertiary aurora — teal accent */}
-      <motion.div
-        className="absolute w-[500px] h-[500px] rounded-full"
-        animate={{ x: [0, -60, 80, 0], y: [0, 60, -40, 0] }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        style={{
-          left: "15%",
-          bottom: "10%",
-          background: "radial-gradient(circle, rgba(6,182,212,0.08) 0%, transparent 70%)",
-          filter: "blur(80px)",
-        }}
-      />
-
-      {/* Warm accent — pink/rose */}
-      <motion.div
-        className="absolute w-[400px] h-[400px] rounded-full"
-        animate={{ x: [0, 40, -30, 0], y: [0, -50, 30, 0] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-        style={{
-          right: "25%",
-          bottom: "25%",
-          background: "radial-gradient(circle, rgba(236,72,153,0.06) 0%, transparent 70%)",
-          filter: "blur(80px)",
-        }}
-      />
-
-      {/* Subtle grid overlay for depth */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0"
         style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
+          background: `
+            radial-gradient(ellipse 80% 60% at 30% 20%, rgba(59,130,246,0.15) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 50% at 75% 80%, rgba(139,92,246,0.10) 0%, transparent 60%),
+            radial-gradient(ellipse 50% 40% at 15% 70%, rgba(6,182,212,0.06) 0%, transparent 60%),
+            radial-gradient(ellipse 40% 35% at 70% 30%, rgba(236,72,153,0.04) 0%, transparent 60%),
+            #0a0a0a
+          `,
         }}
       />
     </div>
@@ -170,23 +104,16 @@ function OrbitChip({ label, color, angle, radius, counterRotateClass }: OrbitChi
           whileHover={{ scale: 1.18 }}
           transition={{ type: "spring", stiffness: 420, damping: 22 }}
           className="relative cursor-default select-none"
-          style={{ willChange: "transform" }}
         >
           {/* Chip body — glassmorphism */}
           <div
             className="relative px-3 py-1.5 rounded-full text-[11px] font-semibold tracking-wide whitespace-nowrap"
             style={{
               color,
-              background: `${color}0d`,
-              backdropFilter: "blur(10px) saturate(140%)",
-              WebkitBackdropFilter: "blur(10px) saturate(140%)",
+              background: `${color}12`,
               border: `1px solid ${color}28`,
               borderTop: `1px solid ${color}40`,
-              boxShadow: `
-                inset 0 1px 0 ${color}18,
-                0 2px 8px rgba(0,0,0,0.35),
-                0 0 12px ${color}0a
-              `,
+              boxShadow: `inset 0 1px 0 ${color}18, 0 2px 8px rgba(0,0,0,0.35)`,
             }}
           >
             {label}
