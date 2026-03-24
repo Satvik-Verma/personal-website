@@ -23,7 +23,8 @@ This is a premium Apple-inspired dark-mode portfolio site for Satvik Verma, a fo
 - `src/components/layout/` — Navbar.tsx, Footer.tsx, ScrollProgress.tsx
 - `src/components/ui/` — Badge.tsx, SectionHeading.tsx, StatCard.tsx
 - `src/components/animation/` — FadeInOnScroll.tsx, StaggerChildren.tsx, TextReveal.tsx (pre-built)
-- `src/components/sections/` — HeroSection.tsx, AboutSection.tsx, ExperienceSection.tsx, ProjectsSection.tsx, PublicationsSection.tsx, ContactSection.tsx
+- `src/components/sections/` — HeroSection.tsx, AboutSection.tsx, ExperienceSection.tsx, XumanShowcase.tsx, StyleAIShowcase.tsx, ProjectsSection.tsx, PublicationsSection.tsx, ContactSection.tsx
+- `src/components/sections/VideoShowcase.tsx` — Reusable full-bleed video section wrapper (accepts videoSrc, posterSrc, children, height, overlayOpacity, videoScale). Shows animated aurora gradient fallback when no video file is present. Props default: height="100vh", overlayOpacity=0.40, videoScale=1.05. Layers: video (scale+will-change) → flat rgba overlay → radial vignette → top/bottom 200px fade gradients (#0a0a0a) → z-10 content container.
 - `src/components/three/` — HeroCanvas.tsx, SkillBall.tsx, SkillBallCluster.tsx, MouseAttractor.tsx, HeroFallback.tsx
 - `src/app/page.tsx` — Main page composing all sections
 
@@ -47,6 +48,16 @@ This is a premium Apple-inspired dark-mode portfolio site for Satvik Verma, a fo
 - ScrollProgress: 3px bar with glow/bloom shadow, glass track layer
 - Footer: footer-glass, social icons as glass squares, easter-egg as easter-egg-glass
 - TypeScript note: `WebkitBackdropFilter` on CSSStyleDeclaration requires cast `(el.style as unknown as Record<string, string>).WebkitBackdropFilter`
+
+**Page Layout Order (updated March 2026):** Hero → About → Experience → XumanShowcase (full-bleed video) → StyleAIShowcase (full-bleed video) → Projects → Publications → Contact. Video showcase sections sit between Experience and the Projects grid so the two flagship projects each get their own cinematic moment before the general projects grid.
+
+**Video Showcase Pattern (March 2026):** XumanShowcase uses blue accent (#3b82f6 / #60a5fa). StyleAIShowcase uses purple/pink accent (#c084fc / #a78bfa). Both share StatCard + TechBadge subcomponents co-located in the file (not extracted — keeps the pattern self-contained). CTAs scroll to #experience. Video files go at /public/videos/xuman.mp4 and /public/videos/styleai.mp4.
+
+**globals.css additions (March 2026):** `::selection` changed to `rgba(59,130,246,0.25) / color: inherit` for softer tint. `video[autoplay]` given `will-change: transform, opacity` for GPU promotion.
+
+**HeroSection blur-to-clear (March 2026):** Title, tagline, and CTA entrance animations now include `filter: "blur(8px)"` in initial state and `filter: "blur(0px)"` in animate, giving a cinematic focus-pull reveal. Name font upgraded from `font-bold` to `font-black` (900 weight).
+
+**layout.tsx Geist font (March 2026):** Added `weight: "variable"` to Geist() so the full weight axis (including 900/black) renders correctly.
 
 **Why:** Premium design upgrade — Apple iOS 26-inspired liquid glass + glassmorphism + skeuomorphism across all 17 components.
 
