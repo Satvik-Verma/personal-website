@@ -36,12 +36,14 @@ export interface Publication {
   year: number;
   type: "paper" | "forum";
   description: string;
+  link?: string;
 }
 
 export interface Award {
   title: string;
   event: string;
   year: number;
+  link?: string;
 }
 
 export interface Certification {

@@ -5,6 +5,8 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  // Include the full variable weight range so font-black (900) renders correctly
+  weight: "variable",
 });
 
 const geistMono = Geist_Mono({

@@ -13,7 +13,8 @@ export const ANIMATION = {
 export const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "Experience", href: "#experience" },
-  { label: "Projects", href: "#projects" },
+  { label: "Projects", href: "#xuman" },
+  { label: "Research", href: "#research" },
   { label: "Publications", href: "#publications" },
   { label: "Contact", href: "#contact" },
 ] as const;

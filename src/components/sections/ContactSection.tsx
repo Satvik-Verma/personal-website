@@ -49,6 +49,7 @@ export default function ContactSection() {
     <section
       id="contact"
       className="py-24 md:py-32 relative"
+      style={{ height: "100vh", background: "#0a0a0a" }}
     >
       <div className="section-divider" />
 

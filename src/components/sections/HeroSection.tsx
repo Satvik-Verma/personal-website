@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import TextReveal from "@/components/animation/TextReveal";
 import { identity, heroSkills } from "@/data/profile";
 
 // ─── Mouse-reactive aurora gradient ─────────────────────────────────────────
@@ -425,7 +424,11 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative min-h-screen w-full overflow-hidden flex items-center">
+    <section
+      ref={containerRef}
+      id="hero"
+      className="relative h-screen w-full overflow-hidden flex items-center"
+    >
       {/* Aurora background */}
       {mounted && <AuroraBackground />}
 
@@ -461,40 +464,43 @@ export default function HeroSection() {
             </span>
           </motion.div>
 
-          {/* Name — massive, bold */}
-          <TextReveal
-            text={identity.name}
-            delay={0.4}
-            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-[0.9] mb-6 heading-gradient"
-          />
-
-          {/* Title */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
+          {/* Name — massive, black weight for maximum commanding presence */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9] mb-6 heading-gradient"
+          >
+            {identity.name}
+          </motion.h1>
+
+          {/* Title — blur-to-clear entrance adds cinematic reveal depth */}
+          <motion.p
+            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.7, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
             className="text-xl md:text-2xl font-medium tracking-tight"
             style={{ color: "#60a5fa" }}
           >
             {identity.title}
           </motion.p>
 
-          {/* Tagline */}
+          {/* Tagline — staggered blur-to-clear after title */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.3, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.7, delay: 1.3, ease: [0.16, 1, 0.3, 1] }}
             className="mt-4 text-base md:text-lg max-w-lg leading-relaxed italic"
             style={{ color: "#52525b" }}
           >
             {identity.tagline}
           </motion.p>
 
-          {/* CTA buttons */}
+          {/* CTA buttons — final item in the entrance sequence */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.7, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
             className="mt-10 flex flex-wrap items-center gap-4"
           >
             <a

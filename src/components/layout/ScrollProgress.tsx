@@ -1,16 +1,52 @@
 "use client";
 
-import { useScroll, useSpring, motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { useMotionValue, useSpring, motion } from "framer-motion";
+
+/*
+  ScrollProgress
+  ==============
+  Reads scroll progress from the CSS custom property `--scroll-driver-progress`
+  that ScrollDriver sets on :root on every scroll event.
+
+  We poll via requestAnimationFrame rather than listening to a scroll event
+  on the body (which no longer scrolls under the ScrollDriver architecture).
+
+  The raw value is spring-smoothed for silky motion before driving scaleX.
+*/
 
 export default function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
+  const rawProgress = useMotionValue(0);
 
-  // Spring-smoothed scroll value for silky motion
-  const scaleX = useSpring(scrollYProgress, {
+  const scaleX = useSpring(rawProgress, {
     stiffness: 200,
     damping: 30,
     restDelta: 0.001,
   });
+
+  const rafRef = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    let lastValue = 0;
+
+    const tick = () => {
+      const style = getComputedStyle(document.documentElement);
+      const val = parseFloat(
+        style.getPropertyValue("--scroll-driver-progress") || "0"
+      );
+      if (val !== lastValue) {
+        lastValue = val;
+        rawProgress.set(val);
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (rafRef.current !== undefined) cancelAnimationFrame(rafRef.current);
+    };
+  }, [rawProgress]);
 
   return (
     <>
@@ -36,7 +72,6 @@ export default function ScrollProgress() {
           scaleX,
           background:
             "linear-gradient(90deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%)",
-          // Bloom effect — the bar glows outward
           boxShadow: [
             "0 0 6px rgba(139,92,246,0.8)",
             "0 0 16px rgba(59,130,246,0.5)",

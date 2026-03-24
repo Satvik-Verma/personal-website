@@ -56,11 +56,20 @@
 }
 
 html {
-  scroll-behavior: smooth;
   color-scheme: dark;
+  /*
+    ScrollDriver architecture — html and body are locked so the browser
+    never scrolls them. The single invisible scroll surface div inside
+    ScrollDriver owns all scroll position. This prevents double-scroll
+    and ensures the fixed sections render cleanly.
+  */
+  overflow: hidden;
+  height: 100vh;
 }
 
 body {
+  overflow: hidden;
+  height: 100vh;
   background: var(--background);
   color: var(--text-primary);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
@@ -73,8 +82,14 @@ body {
 }
 
 ::selection {
-  background: var(--accent);
-  color: white;
+  /* Softer blue tint — keeps text its natural colour for legibility */
+  background: rgba(59, 130, 246, 0.25);
+  color: inherit;
+}
+
+/* Video performance — promote autoplay videos to their own GPU compositor layer */
+video[autoplay] {
+  will-change: transform, opacity;
 }
 
 /* Section scroll snap targets */

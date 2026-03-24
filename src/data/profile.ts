@@ -20,10 +20,10 @@ export const identity = {
 };
 
 export const bio =
-  "Product-driven founding engineer who ships 0\u21921. Built Xuman.AI from first principles and took it from early R&D to production launch\u2014iOS and Android live. Started by designing the intelligence layer and real-time interaction stack, then expanded into end-to-end ownership of product execution, engineering leadership, and platform reliability. Led and scaled a high-velocity team of up to ~9 engineers.";
+  "Founding engineer who ships 0\u21921 across full-stack products and integration-heavy healthcare backends. Launched Xuman.AI on the App Store in ~3 months with a team of two, owning mobile, backend, infrastructure, payments, and real-time video. Built production EHR integrations (FHIR R4, Canvas Medical) and clinical data pipelines from scratch. Strong at rapid iteration, production reliability, and translating ambiguous requirements into working systems.";
 
 export const bioExtended =
-  "Explorer. Tech-savvy AI Pioneer. Passionate about pushing the limits of Agentic models, NLP, and Computer Vision. Founded Style.AI to bring AI-powered fashion intelligence to the real world. Published researcher at AAAI and IEEE on LLM-based IoT security and ML for fusion energy. Hackathon winner (SF Hacks 2024 \u2014 Best GenAI Hack). Refounded and led the AI Club at SF State as President.";
+  "Product-driven software engineering generalist. Currently building production EHR integrations for a stealth healthcare startup while continuing to lead Xuman.AI. Founded Style.AI to bring AI-powered fashion intelligence to the real world. Published researcher at AAAI and IEEE on LLM-based IoT security and ML for fusion energy. Hackathon winner (SF Hacks 2024 \u2014 Best GenAI Hack). Refounded and led the AI Club at SF State as President.";
 
 export const socialLinks: SocialLink[] = [
   {
@@ -49,7 +49,7 @@ export const socialLinks: SocialLink[] = [
 ];
 
 export const stats: Stat[] = [
-  { value: "~9", label: "Engineers Led" },
+  { value: "8", label: "Engineers Led" },
   { value: "2", label: "Apps Shipped" },
   { value: "4", label: "Publications" },
   { value: "200+", label: "Style.AI Users" },
@@ -57,53 +57,65 @@ export const stats: Stat[] = [
 
 export const experience: ExperienceRole[] = [
   {
+    id: "stealth",
+    company: "Stealth Startup",
+    role: "Freelance Healthcare Integration Engineer",
+    period: "Jan 2026 \u2013 Present",
+    location: "Remote",
+    bullets: [
+      "Architected and built production EHR integration with Canvas Medical (FHIR R4): OAuth2 authentication, patient CRUD, appointment scheduling, insurance coverage creation, and real-time eligibility verification via Claim.MD clearinghouse.",
+      "Developed clinical event plugins (Python) with HMAC-signed webhook handling, and payor normalization layer mapping consumer insurance names to FHIR Organization references for eligibility workflows.",
+      "Led PHI architecture refactoring, removed patient demographics from application database, fetching on-demand from EHR to eliminate HIPAA-compliant hosting overhead.",
+    ],
+    techStack: [
+      "Python",
+      "FHIR R4",
+      "Canvas Medical",
+      "Claim.MD",
+      "Webhooks",
+      "OAuth2",
+    ],
+  },
+  {
     id: "xuman",
     company: "Xuman.AI",
-    role: "Founding Engineer & Product Lead (0\u21921)",
+    role: "Founding Engineer / Product & AI Lead (0\u21921)",
     period: "Aug 2025 \u2013 Present",
     location: "San Francisco, CA",
     bullets: [
-      "Built Xuman.AI from first principles and took it from early R&D to production launch 0\u21921 (iOS and Android live).",
-      "Designed the intelligence layer: built agentic workflows for planning, retrieval, ranking, and personalization (LangGraph/RAG) for real product usage.",
-      "Implemented low-latency real-time communication with LiveKit (WebRTC) for audio/video sessions and interactive experiences.",
-      "Designed and built a distributed marketplace backend in NestJS spanning Auth, Users, Bookings, Payments, Messaging, and AI services.",
-      "Orchestrated inter-service workflows with Azure Service Bus + RabbitMQ (async processing, retries, state transitions).",
-      "Engineered complex relational schemas for availability, scheduling, matching, and transactions (Postgres + Prisma).",
-      "Implemented Stripe Connect for multi-party payments, payouts, webhook-driven state machines, idempotency and failure recovery.",
-      "Built the React Native app and owned release execution (CI/CD, App Store/TestFlight, production hardening).",
-      "Led and scaled execution: ran technical interviews, hired, and led a high-velocity team (up to ~9 engineers), while partnering on roadmap and business tradeoffs.",
+      "Took Xuman from concept \u2192 production: shipped iOS app live on the App Store; Android release in progress.",
+      "Led a team of up to 8 engineers across mobile, backend, and infra; owned sprint planning, task breakdown, code reviews, and release coordination.",
+      "Owned end-to-end architecture: React Native (Expo) mobile client, NestJS services, Postgres/Prisma data layer, Redis caching/queues, and Azure deployments. Set up CI/CD and release engineering.",
+      "Built booking lifecycle (discovery \u2192 scheduling \u2192 payment \u2192 session \u2192 feedback), hardening edge cases through rapid iteration and production incident triage.",
     ],
     techStack: [
       "TypeScript",
       "React Native",
+      "Expo/EAS",
       "NestJS",
       "Postgres/Prisma",
+      "Redis",
       "LiveKit/WebRTC",
-      "Azure Service Bus",
-      "RabbitMQ",
+      "Azure",
       "Stripe Connect",
-      "LangGraph",
       "GitHub Actions",
     ],
   },
   {
     id: "styleai",
     company: "Style.AI",
-    role: "Founder & Engineer",
-    period: "Mar 2025 \u2013 Aug 2025",
+    role: "Founder & Software Engineer",
+    period: "Jan 2025 \u2013 Aug 2025",
     location: "San Francisco, CA",
     bullets: [
-      "Built a personalized AI fashion assistant using LLMs and computer vision, improving outfit decision time by 30%.",
-      "Scaled early access program to 200+ users within 1 month through AI-driven recommendations.",
-      "Designed data flows for user wardrobe capture, catalog normalization, and recommendation logic.",
-      "Long-term vision: AI-powered mirrors in retail stores and ecommerce for virtual try-on and styling.",
+      "Built a full-stack AI wardrobe assistant (React Native, FastAPI, PyTorch) that scans clothing via computer vision, generates personalized outfit recommendations, and uses an active learning pipeline trained on 52K+ images.",
     ],
-    techStack: ["Python", "LLMs", "Computer Vision", "Data Pipelines"],
+    techStack: ["React Native", "FastAPI", "PyTorch", "Computer Vision", "Python"],
   },
   {
     id: "sfsu",
     company: "San Francisco State University",
-    role: "Research Assistant",
+    role: "Researcher",
     period: "Feb 2024 \u2013 June 2025",
     location: "San Francisco, CA",
     bullets: [],
@@ -119,34 +131,18 @@ export const experience: ExperienceRole[] = [
     ],
     subProjects: [
       {
-        name: "FusionML \u2014 AI Lead",
+        name: "FusionML",
         bullets: [
-          "Led ML surrogate model development for predicting plasma behavior in fusion tokamak devices as part of a multi-institutional effort led by J. Wright at MIT, with Princeton Plasma Physics Lab and Lawrence Berkeley National Lab.",
-          "Built models using MLP, GPR, and RFR; tuned and optimized hyperparameters. Increased model efficiency by 25% and decreased losses from initial paper by 12%.",
-          "Built evaluation pipelines (error metrics, ablations, variance analysis) and ran experiments on HPC resources (NERSC Perlmutter supercomputer).",
+          "Developed ML surrogate models for predicting plasma behavior in fusion tokamak devices; collaborated across research stakeholders.",
         ],
       },
       {
         name: "IoT Security",
         bullets: [
-          "Built and trained ML models to predict IoT attacks on network traffic using CICIoT2023 and Aposemat IoT 2023 datasets.",
-          "LLM/RAG-based attack detection using feature ranking and knowledge-base prompting.",
-          "Paper accepted at 2 conferences: DSAA-SF 2024 and AAAI Spring Symposium Series 2025. Accepted for Proceedings at AAAI 2025.",
+          "LLM/RAG-based IoT attack detection using feature ranking and knowledge-base prompting; evaluated on public IoT datasets.",
         ],
       },
     ],
-  },
-  {
-    id: "corizo",
-    company: "Corizo",
-    role: "Machine Learning Intern",
-    period: "Dec 2022 \u2013 Feb 2023",
-    location: "Remote",
-    bullets: [
-      "Trained on ML models for big conversational data. Built and deployed models in the workflow.",
-      "Increased model accuracy by 17%. Part of the team for the final deployment of the model.",
-    ],
-    techStack: ["Python", "ML", "NLP", "Data Science"],
   },
 ];
 
@@ -176,7 +172,7 @@ export const projects: Project[] = [
     id: "xuman",
     title: "Xuman.AI",
     description:
-      "Full-stack marketplace platform shipped to the App Store. Agentic AI workflows, real-time video sessions (LiveKit/WebRTC), Stripe Connect payments, distributed NestJS backend, and event-driven architecture.",
+      "Concept to App Store in ~3 months. React Native (Expo) mobile client, NestJS microservices, Postgres/Prisma, Redis, LiveKit/WebRTC real-time video, Stripe Connect payments, and Azure deployments.",
     techStack: [
       "React Native",
       "NestJS",
@@ -192,8 +188,8 @@ export const projects: Project[] = [
     id: "styleai",
     title: "Style.AI",
     description:
-      "AI fashion assistant using LLMs + computer vision. Improved outfit decision time by 30%, scaled to 200+ users in the first month. Vision: AI-powered mirrors in retail stores.",
-    techStack: ["Python", "LLMs", "Computer Vision", "Data Pipelines"],
+      "Full-stack AI wardrobe assistant (React Native, FastAPI, PyTorch) that scans clothing via computer vision, generates personalized outfit recommendations, and uses an active learning pipeline trained on 52K+ images.",
+    techStack: ["React Native", "FastAPI", "PyTorch", "Computer Vision", "Python"],
     featured: true,
     category: "product",
   },
@@ -203,6 +199,7 @@ export const projects: Project[] = [
     description:
       "ML surrogate models for fusion tokamak plasma prediction. Multi-institutional effort with MIT, Princeton Plasma Physics Lab, and LBNL. Increased efficiency by 25%.",
     techStack: ["Python", "MLP", "GPR", "RFR", "HPC"],
+    link: "https://arxiv.org/abs/2409.06122",
     featured: false,
     category: "research",
   },
@@ -212,7 +209,7 @@ export const projects: Project[] = [
     description:
       "LLM/RAG-based IoT attack detection with feature ranking. Accepted at AAAI Spring Symposium 2025 and IEEE DSAA-SF 2024.",
     techStack: ["Python", "LLMs", "RAG", "LangChain"],
-    link: "https://github.com/Satvik-Verma/IoT_Attack",
+    link: "https://ojs.aaai.org/index.php/AAAI-SS/article/view/35587",
     featured: false,
     category: "research",
   },
@@ -247,24 +244,27 @@ export const publications: Publication[] = [
     type: "paper",
     description:
       "LLM/RAG-based approach to IoT attack detection on edge devices. Accepted for Proceedings at AAAI Spring Symposium Series 2025, GenAI@Edge track.",
+    link: "https://ojs.aaai.org/index.php/AAAI-SS/article/view/35587",
   },
   {
     title:
       "Case Study: Leveraging GenAI to Build AI-based Surrogates and Regressors for Modeling Radio Frequency Heating in Fusion Energy Science",
-    venue: "Publication",
-    year: 2025,
+    venue: "arXiv",
+    year: 2024,
     type: "paper",
     description:
       "Explores using generative AI to build ML surrogates for RF heating modeling in fusion energy, part of the multi-institutional FusionML effort.",
+    link: "https://arxiv.org/abs/2409.06122",
   },
   {
     title:
       'Results and Lessons Learned from the "Accelerating Radio Frequency Modeling Using Machine Learning" Project',
-    venue: "Publication",
-    year: 2025,
+    venue: "American Physical Society (DPP 2024)",
+    year: 2024,
     type: "paper",
     description:
       "Comprehensive results and insights from the multi-institutional RF modeling acceleration project spanning MIT, Princeton, and LBNL.",
+    link: "https://meetings.aps.org/Meeting/DPP24/Session/TO07.4",
   },
   {
     title: "Research Proposal \u2014 IoT Security with LLMs",
@@ -281,6 +281,7 @@ export const awards: Award[] = [
     title: "Best GenAI Hack",
     event: "SF Hacks 2024",
     year: 2024,
+    link: "https://devpost.com/software/travpilot",
   },
 ];
 
@@ -296,7 +297,7 @@ export const skillCategories: SkillCategory[] = [
     skills: ["Python", "C++", "TypeScript", "C", "JavaScript", "SQL", "Bash"],
   },
   {
-    domain: "Backend & Infrastructure",
+    domain: "Backend",
     skills: [
       "NestJS",
       "REST APIs",
@@ -306,39 +307,22 @@ export const skillCategories: SkillCategory[] = [
       "Redis",
       "Webhooks",
       "Stripe Connect",
+      "FHIR R4",
     ],
   },
   {
-    domain: "Mobile & Frontend",
-    skills: ["React Native", "Expo/EAS"],
-  },
-  {
-    domain: "Cloud & DevOps",
-    skills: [
-      "Terraform",
-      "Azure Container Apps",
-      "Azure Service Bus",
-      "RabbitMQ",
-      "GitHub Actions CI/CD",
-    ],
+    domain: "Technologies",
+    skills: ["WebRTC/LiveKit", "React Native", "Expo/EAS", "Terraform", "Azure Container Apps", "GitHub Actions CI/CD"],
   },
   {
     domain: "AI / ML",
     skills: [
-      "LLM/RAG",
-      "LangChain",
-      "LangGraph",
+      "LLM/RAG (LangChain)",
       "MCP",
       "Multi-Agent Orchestration",
-      "Agentic Workflows",
       "Feature Ranking",
-      "CV/NLP",
-      "HPC (Perlmutter)",
+      "CV/NLP Evaluation",
     ],
-  },
-  {
-    domain: "Real-Time",
-    skills: ["WebRTC", "LiveKit"],
   },
 ];
 
@@ -349,14 +333,14 @@ export const heroSkills: HeroSkill[] = [
   { label: "NestJS", color: "#10b981", scale: 1.1 },
   { label: "PostgreSQL", color: "#10b981", scale: 1.0 },
   { label: "Redis", color: "#10b981", scale: 0.9 },
-  { label: "LLMs", color: "#8b5cf6", scale: 1.15 },
-  { label: "LangGraph", color: "#8b5cf6", scale: 0.95 },
+  { label: "LLM/RAG", color: "#8b5cf6", scale: 1.15 },
+  { label: "MCP", color: "#8b5cf6", scale: 0.95 },
   { label: "WebRTC", color: "#06b6d4", scale: 0.9 },
+  { label: "FHIR R4", color: "#10b981", scale: 0.9 },
+  { label: "Terraform", color: "#f59e0b", scale: 0.9 },
   { label: "Azure", color: "#f59e0b", scale: 0.95 },
   { label: "Stripe", color: "#8b5cf6", scale: 0.9 },
-  { label: "Prisma", color: "#10b981", scale: 0.9 },
   { label: "C++", color: "#3b82f6", scale: 0.85 },
-  { label: "RAG", color: "#8b5cf6", scale: 0.9 },
 ];
 
 export const education = [

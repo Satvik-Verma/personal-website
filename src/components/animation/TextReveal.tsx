@@ -30,24 +30,26 @@ export default function TextReveal({
             },
           },
         }}
+        className="inline"
       >
         {words.map((word, i) => (
-          <span key={i} className="inline-block overflow-hidden">
-            <motion.span
-              className="inline-block"
-              variants={{
-                hidden: { y: "100%", opacity: 0 },
-                visible: {
-                  y: 0,
-                  opacity: 1,
-                  transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-                },
-              }}
-            >
-              {word}
-            </motion.span>
+          <motion.span
+            key={i}
+            className="inline-block"
+            style={{ willChange: "transform, opacity" }}
+            variants={{
+              hidden: { opacity: 0, y: 20, filter: "blur(6px)" },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+              },
+            }}
+          >
+            {word}
             {i < words.length - 1 && "\u00A0"}
-          </span>
+          </motion.span>
         ))}
       </motion.span>
     </Tag>

@@ -206,37 +206,6 @@ export default function AboutSection() {
                 ))}
               </div>
 
-              {/*
-                Availability indicator — glassmorphism card with live dot.
-              */}
-              <div
-                className="mt-6 flex items-center gap-3 p-4"
-                style={{
-                  background: "rgba(16,185,129,0.06)",
-                  backdropFilter: "blur(16px) saturate(160%)",
-                  WebkitBackdropFilter: "blur(16px) saturate(160%)",
-                  border: "1px solid rgba(16,185,129,0.15)",
-                  borderTop: "1px solid rgba(16,185,129,0.25)",
-                  borderRadius: "16px",
-                  boxShadow:
-                    "0 8px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(16,185,129,0.08)",
-                }}
-              >
-                <div className="relative flex-shrink-0">
-                  <div
-                    className="w-2.5 h-2.5 rounded-full"
-                    style={{ background: "#10b981" }}
-                  />
-                  <div
-                    className="absolute inset-0 w-2.5 h-2.5 rounded-full animate-ping opacity-60"
-                    style={{ background: "#10b981" }}
-                  />
-                </div>
-                <p className="text-sm" style={{ color: "#a1a1aa" }}>
-                  <span className="font-medium" style={{ color: "#fafafa" }}>Open to opportunities</span>
-                  {" "}— full-time roles in SF / remote
-                </p>
-              </div>
             </div>
           </FadeInOnScroll>
         </div>
