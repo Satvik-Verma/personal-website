@@ -24,66 +24,19 @@ interface VideoShowcaseProps {
 // Pure CSS transforms only — no paint recalcs.
 
 function GradientFallback() {
+  // Static gradient mesh — no animations, no blur filters, minimal GPU cost.
+  // The global fixed orbs in page.tsx provide the ambient movement.
   return (
-    <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Deep dark base */}
-      <div className="absolute inset-0" style={{ background: "#060608" }} />
-
-      {/* Aurora blob 1 — slow drift, blue */}
+    <div className="absolute inset-0" aria-hidden="true">
       <div
-        className="absolute rounded-full"
+        className="absolute inset-0"
         style={{
-          width: "120vw",
-          height: "80vh",
-          top: "-20vh",
-          left: "-20vw",
-          background:
-            "radial-gradient(ellipse at center, rgba(59,130,246,0.18) 0%, transparent 65%)",
-          filter: "blur(80px)",
-          animation: "orb-drift-1 32s ease-in-out infinite",
-          willChange: "transform",
-        }}
-      />
-
-      {/* Aurora blob 2 — medium drift, purple */}
-      <div
-        className="absolute rounded-full"
-        style={{
-          width: "80vw",
-          height: "80vh",
-          bottom: "-10vh",
-          right: "-10vw",
-          background:
-            "radial-gradient(ellipse at center, rgba(139,92,246,0.14) 0%, transparent 65%)",
-          filter: "blur(80px)",
-          animation: "orb-drift-2 44s ease-in-out infinite 6s",
-          willChange: "transform",
-        }}
-      />
-
-      {/* Aurora blob 3 — subtle teal */}
-      <div
-        className="absolute rounded-full"
-        style={{
-          width: "60vw",
-          height: "60vh",
-          top: "30%",
-          left: "20%",
-          background:
-            "radial-gradient(ellipse at center, rgba(6,182,212,0.08) 0%, transparent 65%)",
-          filter: "blur(80px)",
-          animation: "orb-drift-3 28s ease-in-out infinite 3s",
-          willChange: "transform",
-        }}
-      />
-
-      {/* Subtle grid texture for depth */}
-      <div
-        className="absolute inset-0 opacity-[0.025]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
+          background: `
+            radial-gradient(ellipse 80% 60% at 20% 20%, rgba(59,130,246,0.12) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 50% at 80% 80%, rgba(139,92,246,0.08) 0%, transparent 60%),
+            radial-gradient(ellipse 50% 40% at 50% 50%, rgba(6,182,212,0.05) 0%, transparent 60%),
+            #060608
+          `,
         }}
       />
     </div>
