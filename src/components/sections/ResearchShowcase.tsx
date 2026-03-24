@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import VideoShowcase from "./VideoShowcase";
+import ProgressReveal from "@/components/animation/ProgressReveal";
 import { experience } from "@/data/profile";
 
 // ─── Reusable atoms ──────────────────────────────────────────────────────────
@@ -10,16 +10,11 @@ interface StatCardProps {
   value: string;
   label: string;
   accent: string;
-  delay?: number;
 }
 
-function StatCard({ value, label, accent, delay = 0 }: StatCardProps) {
+function StatCard({ value, label, accent }: StatCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
+    <div
       className="glass-card flex flex-col items-center justify-center text-center px-5 py-4 min-w-[96px]"
       style={{ borderRadius: "16px" }}
     >
@@ -38,7 +33,7 @@ function StatCard({ value, label, accent, delay = 0 }: StatCardProps) {
       >
         {label}
       </span>
-    </motion.div>
+    </div>
   );
 }
 
@@ -81,13 +76,7 @@ export default function ResearchShowcase() {
     <VideoShowcase id="research" overlayOpacity={0.45}>
       <div className="w-full">
         {/* Eyebrow */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-5 flex items-center gap-3"
-        >
+        <ProgressReveal start={0.0} className="mb-5 flex items-center gap-3">
           <div
             className="h-[1px] w-10 shrink-0"
             style={{
@@ -101,14 +90,11 @@ export default function ResearchShowcase() {
           >
             Research
           </span>
-        </motion.div>
+        </ProgressReveal>
 
         {/* Title */}
-        <motion.h2
-          initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        <ProgressReveal
+          start={0.1}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] mb-3"
           style={{
             background:
@@ -119,63 +105,45 @@ export default function ResearchShowcase() {
           }}
         >
           SFSU Research
-        </motion.h2>
+        </ProgressReveal>
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-base md:text-xl font-medium tracking-tight mb-2"
-          style={{ color: ACCENT_LIGHT }}
-        >
-          {sfsuRole.role}
-        </motion.p>
+        <ProgressReveal start={0.2}>
+          <p
+            className="text-base md:text-xl font-medium tracking-tight mb-2"
+            style={{ color: ACCENT_LIGHT }}
+          >
+            {sfsuRole.role}
+          </p>
+        </ProgressReveal>
 
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="text-xs font-medium tracking-wide mb-8"
-          style={{ color: "rgba(161,161,170,0.6)" }}
-        >
-          {sfsuRole.period} &middot; {sfsuRole.location}
-        </motion.p>
+        <ProgressReveal start={0.25}>
+          <p
+            className="text-xs font-medium tracking-wide mb-8"
+            style={{ color: "rgba(161,161,170,0.6)" }}
+          >
+            {sfsuRole.period} &middot; {sfsuRole.location}
+          </p>
+        </ProgressReveal>
 
         {/* Stat cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap gap-3 mb-8"
-        >
-          {STATS.map((stat, i) => (
+        <ProgressReveal start={0.3} className="flex flex-wrap gap-3 mb-8">
+          {STATS.map((stat) => (
             <StatCard
               key={stat.label}
               value={stat.value}
               label={stat.label}
               accent={stat.accent}
-              delay={0.35 + i * 0.08}
             />
           ))}
-        </motion.div>
+        </ProgressReveal>
 
-        {/* Sub-project blocks — FusionML and IoT Security as glass cards within this section */}
+        {/* Sub-project blocks — FusionML and IoT Security as glass cards */}
         {sfsuRole.subProjects &&
           sfsuRole.subProjects.map((sub, subIndex) => (
-            <motion.div
+            <ProgressReveal
               key={sub.name}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{
-                duration: 0.6,
-                delay: 0.5 + subIndex * 0.12,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+              start={0.45 + subIndex * 0.1}
               className="glass-card p-5 mb-4 max-w-3xl"
               style={{ borderRadius: "16px" }}
             >
@@ -201,21 +169,15 @@ export default function ResearchShowcase() {
                   {bullet}
                 </p>
               ))}
-            </motion.div>
+            </ProgressReveal>
           ))}
 
         {/* Tech badges */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap gap-2 mt-4"
-        >
+        <ProgressReveal start={0.7} className="flex flex-wrap gap-2 mt-4">
           {sfsuRole.techStack.map((tech) => (
             <TechBadge key={tech} label={tech} accent={ACCENT} />
           ))}
-        </motion.div>
+        </ProgressReveal>
       </div>
     </VideoShowcase>
   );

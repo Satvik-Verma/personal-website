@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import VideoShowcase from "./VideoShowcase";
+import ProgressReveal from "@/components/animation/ProgressReveal";
 
 // ─── Stat card ────────────────────────────────────────────────────────────────
 
@@ -9,21 +9,13 @@ interface StatCardProps {
   value: string;
   label: string;
   accent: string;
-  delay?: number;
 }
 
-function StatCard({ value, label, accent, delay = 0 }: StatCardProps) {
+function StatCard({ value, label, accent }: StatCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
+    <div
       className="glass-card flex flex-col items-center justify-center text-center px-5 py-4 min-w-[96px]"
-      style={{
-        // Tighter radius for compact stat chips
-        borderRadius: "16px",
-      }}
+      style={{ borderRadius: "16px" }}
     >
       <span
         className="text-2xl md:text-3xl font-black tracking-tight leading-none"
@@ -40,7 +32,7 @@ function StatCard({ value, label, accent, delay = 0 }: StatCardProps) {
       >
         {label}
       </span>
-    </motion.div>
+    </div>
   );
 }
 
@@ -90,13 +82,7 @@ export default function XumanShowcase() {
     >
       <div className="w-full">
         {/* Eyebrow */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-5 flex items-center gap-3"
-        >
+        <ProgressReveal start={0.0} className="mb-5 flex items-center gap-3">
           <div
             className="h-[1px] w-10 shrink-0"
             style={{
@@ -110,85 +96,60 @@ export default function XumanShowcase() {
           >
             Current Role
           </span>
-        </motion.div>
+        </ProgressReveal>
 
         {/* Title */}
-        <motion.h2
-          initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        <ProgressReveal
+          start={0.1}
           className="heading-gradient text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] mb-3"
         >
           Xuman.AI
-        </motion.h2>
+        </ProgressReveal>
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-base md:text-xl font-medium tracking-tight mb-8"
-          style={{ color: "#60a5fa" }}
-        >
-          Marketplace with Agentic AI Workflows
-        </motion.p>
+        <ProgressReveal start={0.2}>
+          <p
+            className="text-base md:text-xl font-medium tracking-tight mb-8"
+            style={{ color: "#60a5fa" }}
+          >
+            Marketplace with Agentic AI Workflows
+          </p>
+        </ProgressReveal>
 
         {/* Stat cards — horizontal strip */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap gap-3 mb-8"
-        >
-          {XUMAN_STATS.map((stat, i) => (
+        <ProgressReveal start={0.3} className="flex flex-wrap gap-3 mb-8">
+          {XUMAN_STATS.map((stat) => (
             <StatCard
               key={stat.label}
               value={stat.value}
               label={stat.label}
               accent={stat.accent}
-              delay={0.35 + i * 0.08}
             />
           ))}
-        </motion.div>
+        </ProgressReveal>
 
         {/* Description */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-2xl text-sm md:text-base leading-relaxed mb-8"
-          style={{ color: "rgba(161,161,170,0.9)" }}
-        >
-          Took Xuman from concept to production in ~3 months with a team of two.
-          React Native (Expo) mobile client, NestJS microservices, Postgres/Prisma,
-          Redis caching, LiveKit/WebRTC real-time video, Stripe Connect payments,
-          and Azure deployments. iOS live on the App Store.
-        </motion.p>
+        <ProgressReveal start={0.45}>
+          <p
+            className="max-w-2xl text-sm md:text-base leading-relaxed mb-8"
+            style={{ color: "rgba(161,161,170,0.9)" }}
+          >
+            Took Xuman from concept to production in ~3 months with a team of two.
+            React Native (Expo) mobile client, NestJS microservices, Postgres/Prisma,
+            Redis caching, LiveKit/WebRTC real-time video, Stripe Connect payments,
+            and Azure deployments. iOS live on the App Store.
+          </p>
+        </ProgressReveal>
 
         {/* Tech stack badges */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap gap-2 mb-10"
-        >
+        <ProgressReveal start={0.55} className="flex flex-wrap gap-2 mb-10">
           {XUMAN_TECH.map(({ label, accent }) => (
             <TechBadge key={label} label={label} accent={accent} />
           ))}
-        </motion.div>
+        </ProgressReveal>
 
         {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        >
+        <ProgressReveal start={0.65}>
           <a
             href="https://xuman.ai"
             target="_blank"
@@ -200,7 +161,7 @@ export default function XumanShowcase() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 11.5l7-7m0 0H5m6.5 0V11" />
             </svg>
           </a>
-        </motion.div>
+        </ProgressReveal>
       </div>
     </VideoShowcase>
   );

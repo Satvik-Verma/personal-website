@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { identity, heroSkills } from "@/data/profile";
+import ProgressReveal from "@/components/animation/ProgressReveal";
 
 // ─── Mouse-reactive aurora gradient ─────────────────────────────────────────
 
@@ -372,13 +373,8 @@ export default function HeroSection() {
         {/* On mobile the orbit is hidden, so text spans full width.
             On desktop we cap at ~48% to leave room for the orbit ring on the right. */}
         <div className="max-w-full md:max-w-[48%]">
-          {/* Eyebrow */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-6 flex items-center gap-3"
-          >
+          {/* Eyebrow — reveals as soon as section 0 becomes active */}
+          <ProgressReveal start={0.0} className="mb-6 flex items-center gap-3">
             <div
               className="h-[1px] w-10"
               style={{
@@ -389,47 +385,38 @@ export default function HeroSection() {
             <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: "#3b82f6" }}>
               {identity.location}
             </span>
-          </motion.div>
+          </ProgressReveal>
 
           {/* Name — massive, black weight for maximum commanding presence */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          <ProgressReveal
+            start={0.05}
             className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9] mb-6 heading-gradient"
           >
             {identity.name}
-          </motion.h1>
+          </ProgressReveal>
 
-          {/* Title — blur-to-clear entrance adds cinematic reveal depth */}
-          <motion.p
-            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.7, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xl md:text-2xl font-medium tracking-tight"
-            style={{ color: "#60a5fa" }}
-          >
-            {identity.title}
-          </motion.p>
+          {/* Title — reveals after name */}
+          <ProgressReveal start={0.15}>
+            <p
+              className="text-xl md:text-2xl font-medium tracking-tight"
+              style={{ color: "#60a5fa" }}
+            >
+              {identity.title}
+            </p>
+          </ProgressReveal>
 
-          {/* Tagline — staggered blur-to-clear after title */}
-          <motion.p
-            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.7, delay: 1.3, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-4 text-base md:text-lg max-w-lg leading-relaxed italic"
-            style={{ color: "#52525b" }}
-          >
-            {identity.tagline}
-          </motion.p>
+          {/* Tagline — staggered after title */}
+          <ProgressReveal start={0.25}>
+            <p
+              className="mt-4 text-base md:text-lg max-w-lg leading-relaxed italic"
+              style={{ color: "#52525b" }}
+            >
+              {identity.tagline}
+            </p>
+          </ProgressReveal>
 
           {/* CTA buttons — final item in the entrance sequence */}
-          <motion.div
-            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.7, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-10 flex flex-wrap items-center gap-4"
-          >
+          <ProgressReveal start={0.35} className="mt-10 flex flex-wrap items-center gap-4">
             <a
               href="#projects"
               onClick={(e) => {
@@ -454,7 +441,7 @@ export default function HeroSection() {
             >
               Get In Touch
             </a>
-          </motion.div>
+          </ProgressReveal>
 
           {/* Mobile tech list — only visible below md breakpoint */}
           <MobileTechList />

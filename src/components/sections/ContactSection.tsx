@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import FadeInOnScroll from "@/components/animation/FadeInOnScroll";
-import StaggerChildren, { StaggerItem } from "@/components/animation/StaggerChildren";
+import ProgressReveal from "@/components/animation/ProgressReveal";
 import { socialLinks, identity } from "@/data/profile";
 import type { SocialLink } from "@/types";
 
@@ -55,7 +54,7 @@ export default function ContactSection() {
 
       <div className="max-w-6xl mx-auto px-6 pt-1">
         {/* Centered heading */}
-        <FadeInOnScroll>
+        <ProgressReveal start={0.0}>
           <div className="text-center max-w-2xl mx-auto mb-16">
             <p
               className="text-xs font-semibold uppercase tracking-[0.18em] mb-4"
@@ -88,22 +87,18 @@ export default function ContactSection() {
               Open to full-time roles, interesting collaborations, and conversations about building great products.
             </p>
           </div>
-        </FadeInOnScroll>
+        </ProgressReveal>
 
         {/*
           GLASSMORPHISM SOCIAL CARDS
           Each platform gets its own color bleeding through the frosted glass.
           The icon container carries the per-platform accent color.
         */}
-        <StaggerChildren
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10"
-          delay={0.2}
-          stagger={0.08}
-        >
-          {socialLinks.map((link) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+          {socialLinks.map((link, i) => {
             const meta = socialMeta[link.platform];
             return (
-              <StaggerItem key={link.platform}>
+              <ProgressReveal key={link.platform} start={0.2 + i * 0.08}>
                 <motion.a
                   href={link.url}
                   target={link.platform !== "email" ? "_blank" : undefined}
@@ -172,13 +167,13 @@ export default function ContactSection() {
                     </svg>
                   </div>
                 </motion.a>
-              </StaggerItem>
+              </ProgressReveal>
             );
           })}
-        </StaggerChildren>
+        </div>
 
         {/* Resume CTA — skeuomorphic pressable button */}
-        <FadeInOnScroll delay={0.4}>
+        <ProgressReveal start={0.55}>
           <div className="text-center">
             <a
               href="/Satvik_Verma_Resume.pdf"
@@ -198,7 +193,7 @@ export default function ContactSection() {
               PDF &middot; Updated {new Date().getFullYear()}
             </p>
           </div>
-        </FadeInOnScroll>
+        </ProgressReveal>
       </div>
     </section>
   );

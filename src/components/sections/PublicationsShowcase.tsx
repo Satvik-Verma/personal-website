@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import VideoShowcase from "./VideoShowcase";
+import ProgressReveal from "@/components/animation/ProgressReveal";
 import { publications, awards } from "@/data/profile";
 
 // ─── Reusable atoms ─────────────────────────────────────────────────────────
@@ -10,16 +10,11 @@ interface StatCardProps {
   value: string;
   label: string;
   accent: string;
-  delay?: number;
 }
 
-function StatCard({ value, label, accent, delay = 0 }: StatCardProps) {
+function StatCard({ value, label, accent }: StatCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
+    <div
       className="glass-card flex flex-col items-center justify-center text-center px-5 py-4 min-w-[96px]"
       style={{ borderRadius: "16px" }}
     >
@@ -38,7 +33,7 @@ function StatCard({ value, label, accent, delay = 0 }: StatCardProps) {
       >
         {label}
       </span>
-    </motion.div>
+    </div>
   );
 }
 
@@ -84,13 +79,7 @@ export default function PublicationsShowcase() {
     <VideoShowcase id="publications" overlayOpacity={0.45}>
       <div className="w-full py-8">
         {/* Eyebrow */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-5 flex items-center gap-3"
-        >
+        <ProgressReveal start={0.0} className="mb-5 flex items-center gap-3">
           <div
             className="h-[1px] w-10 shrink-0"
             style={{
@@ -104,50 +93,38 @@ export default function PublicationsShowcase() {
           >
             Research & Awards
           </span>
-        </motion.div>
+        </ProgressReveal>
 
         {/* Title */}
-        <motion.h2
-          initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        <ProgressReveal
+          start={0.1}
           className="heading-gradient text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[0.9] mb-3"
         >
           Publications
-        </motion.h2>
+        </ProgressReveal>
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-base md:text-xl font-medium tracking-tight mb-8"
-          style={{ color: SECONDARY_ACCENT }}
-        >
-          4 publications across AAAI, IEEE, and fusion energy. Winner at SF
-          Hacks.
-        </motion.p>
+        <ProgressReveal start={0.2}>
+          <p
+            className="text-base md:text-xl font-medium tracking-tight mb-8"
+            style={{ color: SECONDARY_ACCENT }}
+          >
+            4 publications across AAAI, IEEE, and fusion energy. Winner at SF
+            Hacks.
+          </p>
+        </ProgressReveal>
 
         {/* Stat cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap gap-3 mb-12"
-        >
-          {PUB_STATS.map((stat, i) => (
+        <ProgressReveal start={0.3} className="flex flex-wrap gap-3 mb-12">
+          {PUB_STATS.map((stat) => (
             <StatCard
               key={stat.label}
               value={stat.value}
               label={stat.label}
               accent={stat.accent}
-              delay={0.35 + i * 0.08}
             />
           ))}
-        </motion.div>
+        </ProgressReveal>
 
         {/* Publication cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-12">
@@ -157,66 +134,56 @@ export default function PublicationsShowcase() {
               color: "#3b82f6",
             };
             return (
-              <motion.div
+              <ProgressReveal
                 key={pub.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{
-                  duration: 0.7,
-                  delay: 0.4 + i * 0.1,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="glass-card p-6 flex flex-col"
-                style={{ borderRadius: "18px" }}
+                start={0.4 + i * 0.08}
               >
-                {/* Header */}
-                <div className="flex items-center justify-between mb-4">
-                  <TechBadge label={config.label} accent={config.color} />
-                  <span
-                    className="text-xs font-medium"
-                    style={{ color: "rgba(161,161,170,0.5)" }}
+                <div
+                  className="glass-card p-6 flex flex-col"
+                  style={{ borderRadius: "18px" }}
+                >
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-4">
+                    <TechBadge label={config.label} accent={config.color} />
+                    <span
+                      className="text-xs font-medium"
+                      style={{ color: "rgba(161,161,170,0.5)" }}
+                    >
+                      {pub.year}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3
+                    className="text-base font-bold leading-snug mb-2"
+                    style={{ color: "#fafafa" }}
                   >
-                    {pub.year}
-                  </span>
+                    {pub.title}
+                  </h3>
+
+                  {/* Venue */}
+                  <p
+                    className="text-xs font-semibold uppercase tracking-wide mb-3"
+                    style={{ color: config.color }}
+                  >
+                    {pub.venue}
+                  </p>
+
+                  {/* Description */}
+                  <p
+                    className="text-sm leading-relaxed flex-grow"
+                    style={{ color: "rgba(161,161,170,0.9)" }}
+                  >
+                    {pub.description}
+                  </p>
                 </div>
-
-                {/* Title */}
-                <h3
-                  className="text-base font-bold leading-snug mb-2"
-                  style={{ color: "#fafafa" }}
-                >
-                  {pub.title}
-                </h3>
-
-                {/* Venue */}
-                <p
-                  className="text-xs font-semibold uppercase tracking-wide mb-3"
-                  style={{ color: config.color }}
-                >
-                  {pub.venue}
-                </p>
-
-                {/* Description */}
-                <p
-                  className="text-sm leading-relaxed flex-grow"
-                  style={{ color: "rgba(161,161,170,0.9)" }}
-                >
-                  {pub.description}
-                </p>
-              </motion.div>
+              </ProgressReveal>
             );
           })}
         </div>
 
         {/* Awards section */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap gap-4"
-        >
+        <ProgressReveal start={0.75} className="flex flex-wrap gap-4">
           {awards.map((award) => (
             <div
               key={award.title}
@@ -259,7 +226,7 @@ export default function PublicationsShowcase() {
               </div>
             </div>
           ))}
-        </motion.div>
+        </ProgressReveal>
       </div>
     </VideoShowcase>
   );

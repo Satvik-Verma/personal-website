@@ -30,6 +30,29 @@ export function useScrollDriver() {
   return useContext(ScrollDriverContext);
 }
 
+// ─── Section Progress Refs ───────────────────────────────────────────────────
+// These refs are module-level singletons. ProgressReveal reads them imperatively
+// without triggering React re-renders on every scroll frame.
+
+export const sectionProgressRef: { current: number } = { current: 0 };
+export const activeSectionRef: { current: number } = { current: 0 };
+
+/** Returns the module-level refs for imperative rAF-based reading. */
+export function useScrollDriverProgressRef() {
+  return { sectionProgressRef, activeSectionRef };
+}
+
+// ─── Section Index Context ───────────────────────────────────────────────────
+// Each section wrapper in ScrollDriver sets this context to its index.
+// ProgressReveal reads it to know which section it lives in, so it only
+// reveals when that section is the active one.
+
+export const SectionIndexContext = createContext<number>(0);
+
+export function useSectionIndex() {
+  return useContext(SectionIndexContext);
+}
+
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 interface ScrollDriverProps {
@@ -109,6 +132,17 @@ export default function ScrollDriver({ children, sectionIds }: ScrollDriverProps
       const sectionFloat = (scrollTop / scrollHeight) * totalSections;
       const newActive = Math.min(Math.floor(sectionFloat), totalSections - 1);
       const rawProgress = scrollTop / scrollHeight;
+
+      // Compute 0-1 progress within the active section.
+      // The active section occupies a 1/totalSections slice of the scroll range.
+      // We remap the first 80% of that slice to 0→1 so elements reveal well
+      // before the cross-fade to the next section begins.
+      const progressInSection = sectionFloat - newActive;
+      const remapped = Math.min(progressInSection / 0.8, 1.0);
+
+      // Write to module-level refs — no React re-renders on scroll frames.
+      sectionProgressRef.current = remapped;
+      activeSectionRef.current = newActive;
 
       document.documentElement.style.setProperty(
         "--scroll-driver-progress",
@@ -232,23 +266,24 @@ export default function ScrollDriver({ children, sectionIds }: ScrollDriverProps
         {children.map((child, index) => {
           const sectionId = sectionIds?.[index];
           return (
-            <div
-              key={index}
-              id={sectionId ? `scroll-driver-wrapper-${sectionId}` : undefined}
-              ref={(el) => { sectionRefs.current[index] = el; }}
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: "100%",
-                height: "100vh",
-                opacity: 0,
-                visibility: "hidden",
-                pointerEvents: "none",
-                contain: "layout style paint",
-              }}
-            >
-              {child}
-            </div>
+            <SectionIndexContext.Provider key={index} value={index}>
+              <div
+                id={sectionId ? `scroll-driver-wrapper-${sectionId}` : undefined}
+                ref={(el) => { sectionRefs.current[index] = el; }}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100vh",
+                  opacity: 0,
+                  visibility: "hidden",
+                  pointerEvents: "none",
+                  contain: "layout style paint",
+                }}
+              >
+                {child}
+              </div>
+            </SectionIndexContext.Provider>
           );
         })}
       </div>

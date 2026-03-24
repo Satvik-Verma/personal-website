@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import VideoShowcase from "./VideoShowcase";
+import ProgressReveal from "@/components/animation/ProgressReveal";
 import { projects } from "@/data/profile";
 
 // ─── Reusable atoms ──────────────────────────────────────────────────────────
@@ -10,16 +10,11 @@ interface StatCardProps {
   value: string;
   label: string;
   accent: string;
-  delay?: number;
 }
 
-function StatCard({ value, label, accent, delay = 0 }: StatCardProps) {
+function StatCard({ value, label, accent }: StatCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
+    <div
       className="glass-card flex flex-col items-center justify-center text-center px-5 py-4 min-w-[96px]"
       style={{ borderRadius: "16px" }}
     >
@@ -38,7 +33,7 @@ function StatCard({ value, label, accent, delay = 0 }: StatCardProps) {
       >
         {label}
       </span>
-    </motion.div>
+    </div>
   );
 }
 
@@ -81,13 +76,7 @@ export default function FusionMLShowcase() {
     <VideoShowcase id="fusionml" overlayOpacity={0.45}>
       <div className="w-full">
         {/* Eyebrow */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-5 flex items-center gap-3"
-        >
+        <ProgressReveal start={0.0} className="mb-5 flex items-center gap-3">
           <div
             className="h-[1px] w-10 shrink-0"
             style={{
@@ -101,14 +90,11 @@ export default function FusionMLShowcase() {
           >
             Research Project
           </span>
-        </motion.div>
+        </ProgressReveal>
 
         {/* Title */}
-        <motion.h2
-          initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        <ProgressReveal
+          start={0.1}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] mb-3"
           style={{
             background:
@@ -119,74 +105,52 @@ export default function FusionMLShowcase() {
           }}
         >
           FusionML
-        </motion.h2>
+        </ProgressReveal>
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-base md:text-xl font-medium tracking-tight mb-8"
-          style={{ color: ACCENT_LIGHT }}
-        >
-          ML Surrogates for Fusion Tokamak Plasma Prediction
-        </motion.p>
+        <ProgressReveal start={0.2}>
+          <p
+            className="text-base md:text-xl font-medium tracking-tight mb-8"
+            style={{ color: ACCENT_LIGHT }}
+          >
+            ML Surrogates for Fusion Tokamak Plasma Prediction
+          </p>
+        </ProgressReveal>
 
         {/* Stat cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap gap-3 mb-8"
-        >
-          {STATS.map((stat, i) => (
+        <ProgressReveal start={0.3} className="flex flex-wrap gap-3 mb-8">
+          {STATS.map((stat) => (
             <StatCard
               key={stat.label}
               value={stat.value}
               label={stat.label}
               accent={stat.accent}
-              delay={0.35 + i * 0.08}
             />
           ))}
-        </motion.div>
+        </ProgressReveal>
 
         {/* Description */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-3xl text-sm md:text-base leading-relaxed mb-8"
-          style={{ color: "rgba(161,161,170,0.9)" }}
-        >
-          {fusionProject.description} Collaborated across research stakeholders
-          including MIT, Princeton Plasma Physics Lab, and LBNL. Ran large-scale
-          training on NERSC Perlmutter HPC clusters.
-        </motion.p>
+        <ProgressReveal start={0.45}>
+          <p
+            className="max-w-3xl text-sm md:text-base leading-relaxed mb-8"
+            style={{ color: "rgba(161,161,170,0.9)" }}
+          >
+            {fusionProject.description} Collaborated across research stakeholders
+            including MIT, Princeton Plasma Physics Lab, and LBNL. Ran large-scale
+            training on NERSC Perlmutter HPC clusters.
+          </p>
+        </ProgressReveal>
 
         {/* Tech badges */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap gap-2 mb-10"
-        >
+        <ProgressReveal start={0.55} className="flex flex-wrap gap-2 mb-10">
           {fusionProject.techStack.map((tech) => (
             <TechBadge key={tech} label={tech} accent={ACCENT} />
           ))}
-        </motion.div>
+        </ProgressReveal>
 
         {/* Paper link */}
         {fusionProject.link && (
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          >
+          <ProgressReveal start={0.65}>
             <a
               href={fusionProject.link}
               target="_blank"
@@ -206,7 +170,7 @@ export default function FusionMLShowcase() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 11.5l7-7m0 0H5m6.5 0V11" />
               </svg>
             </a>
-          </motion.div>
+          </ProgressReveal>
         )}
       </div>
     </VideoShowcase>
